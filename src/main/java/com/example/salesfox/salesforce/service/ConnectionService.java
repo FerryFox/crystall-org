@@ -56,6 +56,6 @@ public class ConnectionService {
         JsonNode root = mapper.readTree(responseBody);
         return root.path("access_token").asText();
         */
-        return ""; // Implement the actual extraction logic
+        return responseBody; // Implement the actual extraction logic
     }
 }
