@@ -20,7 +20,6 @@ public class SalesforceContoller {
     public String query() 
     {
         ConnectionService connectionController = new ConnectionService();
-        connectionController.authenticate();
-        return "blub";
+        return connectionController.authenticate();
     }
 }
