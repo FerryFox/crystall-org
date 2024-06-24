@@ -1,15 +1,9 @@
 package com.example.salesfox.salesforce.service;
 
 import org.springframework.stereotype.Service;
-
-import lombok.Getter;
-import lombok.Setter;
-
 import static io.restassured.RestAssured.given;
 
 @Service
-@Getter
-@Setter
 public class ConnectionService {
 
     public String accessToken;
