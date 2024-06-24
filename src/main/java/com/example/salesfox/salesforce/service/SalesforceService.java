@@ -1,70 +1,47 @@
 package com.example.salesfox.salesforce.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import java.util.logging.Logger;
+
+import io.restassured.http.ContentType;
+
+import org.json.JSONObject;
+import static io.restassured.RestAssured.*;
+
 
 @Service
-public class SalesforceService 
-{
-    private static final Logger logger = Logger.getLogger(SalesforceService.class.getName());
+public class SalesforceService {
 
-    private final String clientId = "3MVG9k02hQhyUgQC5s3dVYFGeHDBXa8nXzMGlijdxP4DR.r.BHl9lGSfguhMy000HJ7kj_rf7W5VbiB0NqTWq";
-    private final String clientSecret = "C16184EE73691505A7ADAB4CC0B8ECEF98BADF6F460869A19B1EC2741EE20C20";
-    private final String username = "dustin.rasch@resilient-goat-uddb3x.com";
-    private final String password = "Mainz123Mainz!?";
-    private final String token = "QUnpX0X5tzShLXbDnGTLb7BN";
-    private final String loginUrl = "https://login.salesforce.com";
+    @Autowired
+    private final ConnectionService connectionService;
 
-    private String accessToken;
-    private String instanceUrl;
+    private static final String INSTACE_URL = "https://resilient-goat-uddb3x-dev-ed.trailblaze.my.salesforce.com";
 
-    public void authenticate() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            String url = UriComponentsBuilder.fromHttpUrl(loginUrl + "/services/oauth2/token")
-                    .queryParam("grant_type", "password")
-                    .queryParam("client_id", clientId)
-                    .queryParam("client_secret", clientSecret)
-                    .queryParam("username", username)
-                    .queryParam("password", password + token)
-                    .toUriString();
-
-            logger.info("Authenticating with URL: " + url);
-
-            Map<String, String> response = restTemplate.postForObject(url, null, Map.class);
-            if (response != null) {
-                this.accessToken = response.get("access_token");
-                this.instanceUrl = response.get("instance_url");
-
-                logger.info("Authentication successful. Access token: " + accessToken + ", Instance URL: " + instanceUrl);
-            } else {
-                logger.severe("Authentication failed. Response is null.");
-            }
-        } catch (Exception e) {
-            logger.severe("Error during authentication: " + e.getMessage());
-        }
+    public SalesforceService(ConnectionService connectionService) {
+        this.connectionService = connectionService;
     }
+    
+    public String insertAccount () 
+    {
+        Map<String, Object> mapper = new HashMap<String, Object>();
+        mapper.put("Name", "Test Account XCVB");
 
-    public String querySalesforce(String soql) {
-        if (accessToken == null || instanceUrl == null) {
-            authenticate();
-        }
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            String url = UriComponentsBuilder.fromHttpUrl(instanceUrl + "/services/data/v54.0/query")
-                    .queryParam("q", soql)
-                    .toUriString();
+        JSONObject jsonAccount = new JSONObject(mapper);
 
-            logger.info("Querying Salesforce with URL: " + url);
+        System.out.println("Access_Token :::" + connectionService.accessToken);
+        System.out.println("JSON Account ::: " + jsonAccount.toString());
 
-            return restTemplate.getForObject(url, String.class, Map.of("Authorization", "Bearer " + accessToken));
-        } catch (Exception e) {
-            logger.severe("Error during query: " + e.getMessage());
-            return null;
-        }
+        return
+            given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("Authorization", "Bearer " + connectionService.accessToken)
+                .header("Content-Type", "application/json")
+                .body(jsonAccount.toString())
+            .when().post(INSTACE_URL + "/services/data/v61.0/sobjects/Account")
+            .then().statusCode(201).log().body().extract().path("id");
     }
 }
