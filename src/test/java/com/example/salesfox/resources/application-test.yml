@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: salesfox
+
+app:
+  username: nameDummy
+  password: passwordDummy
+  client_id: SWAGGERId
+  client_secret: SWAGGERSecret

@@ -9,16 +9,16 @@ public class ConnectionService {
 
     public String accessToken;
 
-    @Value("${app.username}")
+    @Value("${app.username:defaultName}")
     private String username;
 
-    @Value("${app.password}")
+    @Value("${app.password:defaultPassword}")
     private String password;
 
-    @Value("${app.client_id}")
+    @Value("${app.client_id:defaultId}")
     private String client_id;
 
-    @Value("${app.client_secret}")
+    @Value("${app.client_secret:defaultSecret}")
     private String client_secret;
 
     public ConnectionService() {
