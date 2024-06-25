@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: salesfox
+
+app:
+  username: ${USERNAME:defaultUsername}
+  password: ${PASSWORD:defaultPassword}
+  client_id: ${CLIENT_ID:defaultClientId}
+  client_secret: ${CLIENT_SECRET:defaultClientSecret}
