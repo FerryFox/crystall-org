@@ -1,11 +1,8 @@
 package com.example.salesfox.salesforce.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.restassured.http.ContentType;
-import org.json.JSONObject;
 import static io.restassured.RestAssured.*;
 
 
@@ -21,46 +18,15 @@ public class SalesforceService {
         this.connectionService = connectionService;
     }
     
-    //dose not work
-    public String insertAccount () 
-    {
-        Map<String, Object> mapper = new HashMap<String, Object>();
-        mapper.put("Name", "Test Account XCVB");
-
-        JSONObject jsonAccount = new JSONObject(mapper);
-
-        System.out.println("Access_Token :::" + connectionService.accessToken);
-        System.out.println("JSON Account ::: " + jsonAccount.toString());
-
-        return
-            given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", "Bearer " + connectionService.accessToken)
-                .header("Content-Type", "application/json")
-                .body(jsonAccount.toString())
-            .when().post(INSTACE_URL + "/services/data/v61.0/sobjects/Account")
-            .then().statusCode(201).log().body().extract().path("id");
-    }
-
-    public String getAccountById(String accountId) 
-    {
-        return
-            given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", "Bearer " + connectionService.accessToken)
-            .when().get(INSTACE_URL + "/services/data/v61.0/sobjects/Account/" + accountId)
-            .then().statusCode(200).log().body().extract().path("Name");
-    }
-
     public String querySalesforce(String query) 
     {
+        String token = connectionService.getAccessToken();
+
         return
             given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .header("Authorization", "Bearer " + connectionService.accessToken)
+                .header("Authorization", "Bearer " + token)
             .when().get(INSTACE_URL + "/services/data/v61.0/query/?q=" + query)
             .then().statusCode(200).log().body().extract().asString();
     }

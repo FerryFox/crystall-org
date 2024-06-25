@@ -1,5 +1,6 @@
 package com.example.salesfox.salesforce.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import static io.restassured.RestAssured.given;
 
@@ -7,21 +8,31 @@ import static io.restassured.RestAssured.given;
 public class ConnectionService {
 
     public String accessToken;
-    
-    public ConnectionService() {
-        this.accessToken = getAccessToken();
-    }
-    
-    private String getAccessToken()
-    {
-        if (this.accessToken != null ) return this.accessToken;
 
+    @Value("${app.username}")
+    private String username;
+
+    @Value("${app.password}")
+    private String password;
+
+    @Value("${app.client_id}")
+    private String client_id;
+
+    @Value("${app.client_secret}")
+    private String client_secret;
+
+    public ConnectionService() {
+        
+    }
+
+    public String getAccessToken()
+    {
         return
             given().urlEncodingEnabled(true)
-            .param("username", "dustin.rasch@resilient-goat-uddb3x.com")
-            .param("password", "Mainz123mainz!?QUnpX0X5tzShLXbDnGTLb7BN")
-            .param("client_id", "3MVG9k02hQhyUgQC5s3dVYFGeHAZkwHWsQJGEuCmRGZ9I3uX3ISLocZPXXgRL6T.y9cYUz.BItY93MScB4ZSL")
-            .param("client_secret", "1059EAC9E880E72F19F92BDF9E11EBE6A085C0F243B42245A6CDB54BC880A7B7")
+            .param("username", username)
+            .param("password", password)
+            .param("client_id", client_id)
+            .param("client_secret", client_secret)
             .param("grant_type", "password")
             .header("Accept", "application/json")
             .header("Content-Type", "application/x-www-form-urlencoded")
