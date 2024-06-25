@@ -28,6 +28,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Test with Maven using Test profile
+
+      run: mvn test -DargLine="-Dspring.profiles.active=test"
+      
     - name: Build with Maven with Production profile
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
