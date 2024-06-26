@@ -1,27 +1,18 @@
 package com.example.salesfox.salesforce.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.example.salesfox.util.service.SecretService;
 import static io.restassured.RestAssured.given;
 
 @Service
 public class ConnectionService {
 
+    private final SecretService secretService;
+
     public String accessToken;
 
-    @Value("${app.username:defaultName}")
-    private String username;
-
-    @Value("${app.password:defaultPassword}")
-    private String password;
-
-    @Value("${app.client_id:defaultId}")
-    private String client_id;
-
-    @Value("${app.client_secret:defaultSecret}")
-    private String client_secret;
-
-    public ConnectionService() {
+    public ConnectionService(SecretService secretService) {
+        this.secretService = secretService;
         
     }
 
@@ -29,10 +20,10 @@ public class ConnectionService {
     {
         return
             given().urlEncodingEnabled(true)
-            .param("username", username)
-            .param("password", password)
-            .param("client_id", client_id)
-            .param("client_secret", client_secret)
+            .param("username", secretService.getUsername())
+            .param("password", secretService.getPassword())
+            .param("client_id", secretService.getClient_id())
+            .param("client_secret", secretService.getClient_secret())
             .param("grant_type", "password")
             .header("Accept", "application/json")
             .header("Content-Type", "application/x-www-form-urlencoded")
