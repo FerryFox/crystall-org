@@ -11,5 +11,4 @@ class SalesfoxApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
