@@ -1,22 +1,32 @@
 package com.example.salesfox.util.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SecretService {
     
-    @Value("${app.username:built-in-user@com}")
     private String username;
 
-    @Value("${app.password:built-in-password}")
     private String password;
 
-    @Value("${app.client_id:built-in-client-id}")
     private String client_id;
 
-    @Value("${app.client_secret:built-in-client-secret}")
     private String client_secret;
+
+    public SecretService() 
+    {
+        System.getenv().forEach((k, v) -> {
+            if (k.equals("USERNAME")) {
+                username = v;
+            } else if (k.equals("PASSWORD")) {
+                password = v;
+            } else if (k.equals("CLIENT_ID")) {
+                client_id = v;
+            } else if (k.equals("CLIENT_SECRET")) {
+                client_secret = v;
+            }
+        });
+    }
 
     public String getUsername() {
         return username;
