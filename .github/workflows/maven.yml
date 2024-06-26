@@ -39,4 +39,4 @@ jobs:
         PASSWORD: ${{ secrets.PASSWORD }}
         USERNAME: ${{ secrets.USERNAME }}
        
-      run: mvn -DskipTests=true -DargLine="-Dspring-boot.run.profiles=prod" -B package --file pom.xml
+      run: mvn -DskipTests=true -Dspring.profiles.active=prod -B package --file pom.xml
