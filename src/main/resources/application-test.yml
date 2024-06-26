@@ -2,9 +2,6 @@ spring:
   application:
     name: salesfox
 
-  profiles:
-    active: test
-
 app:
   username: nameDummy@com
   password: passwordDummy

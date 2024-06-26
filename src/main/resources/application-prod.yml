@@ -3,7 +3,7 @@ spring:
     name: salesfox
 
 app:
-  username: ${USERNAME:defaultUsername}
-  password: ${PASSWORD:defaultPassword}
-  client_id: ${CLIENT_ID:defaultClientId}
-  client_secret: ${CLIENT_SECRET:defaultClientSecret}
+  username: ${USERNAME}
+  password: ${PASSWORD}
+  client_id: ${CLIENT_ID}
+  client_secret: ${CLIENT_SECRET}

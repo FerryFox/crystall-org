@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class SecretService {
     
-    @Value("${app.username:defaultName}")
+    @Value("${app.username:built-in-user@com}")
     private String username;
 
-    @Value("${app.password:defaultPassword}")
+    @Value("${app.password:built-in-password}")
     private String password;
 
-    @Value("${app.client_id:defaultId}")
+    @Value("${app.client_id:built-in-client-id}")
     private String client_id;
 
-    @Value("${app.client_secret:defaultSecret}")
+    @Value("${app.client_secret:built-in-client-secret}")
     private String client_secret;
 
     public String getUsername() {
