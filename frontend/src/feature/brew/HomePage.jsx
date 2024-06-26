@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import { Typography, TextField, Box } from '@mui/material';
+import { Typography, TextField, Box, Toolbar, Container, Stack } from '@mui/material';
+import Controller from '../core/Controller';
+
 
 export default function HomePage()
 {
@@ -35,9 +37,13 @@ export default function HomePage()
 
     return (
         <>  
-            <Typography variant='h2' gutterBottom color="secondary" > {greeting} </Typography> 
+        <Controller title="Query Page" />
+        <Toolbar />
+        <Container>
+          <Stack spacing={2}>
+            <Typography variant='h3' gutterBottom color="secondary" > {greeting} </Typography> 
 
-            <Typography variant="h5" gutterBottom color="primary"> Try out our new Search Feature</Typography>
+            <Typography variant="body1" gutterBottom color="primary"> Try out our new Search Feature</Typography>
 
             <Button variant="contained" color="secondary" onClick={handleSearch}> Search </Button>
 
@@ -59,6 +65,8 @@ export default function HomePage()
                     <pre style={{ textAlign: 'left' }}>{JSON.stringify(searchResult, null, 2)}</pre>
                 </Box>
             )}
+          </Stack>
+        </Container>
         </>
     );
 }
