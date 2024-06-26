@@ -14,16 +14,16 @@ public class SecretService {
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
-    @Value("${app.username}")
+    @Value("${app.username:default}")
     private String propUsername;
 
-    @Value("${app.password}")
+    @Value("${app.password:default}")
     private String propPassword;
 
-    @Value("${app.client_id}")
+    @Value("${app.client_id:default}")
     private String propClientId;
 
-    @Value("${app.client_secret}")
+    @Value("${app.client_secret:default}")
     private String propClientSecret;
 
     Boolean isLoaded = false;
