@@ -1,6 +1,6 @@
 import React from 'react';
 import Controller from '../core/Controller';
-import { Button, Container, Toolbar } from '@mui/material';
+import { Container, Toolbar } from '@mui/material';
 
 export default function CenterHub()
 {

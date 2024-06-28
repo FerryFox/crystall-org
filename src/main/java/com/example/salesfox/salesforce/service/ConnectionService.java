@@ -13,12 +13,13 @@ public class ConnectionService {
 
     public ConnectionService(SecretService secretService) {
         this.secretService = secretService;
-        
     }
 
     public String getAccessToken()
     {
-        return
+        if (accessToken != null) return accessToken;
+       
+        accessToken = 
             given().urlEncodingEnabled(true)
             .param("username", secretService.getUsername())
             .param("password", secretService.getPassword())
@@ -30,6 +31,9 @@ public class ConnectionService {
         .when()
         .post("https://login.salesforce.com/services/oauth2/token")
         .then()
-        .assertThat().statusCode(200).log().body().extract().path("access_token");
+        .assertThat().statusCode(200).log()
+        .body().extract().path("access_token");
+
+        return accessToken;
     }
 }
