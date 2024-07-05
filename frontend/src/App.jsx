@@ -7,6 +7,8 @@ import { CssBaseline, ThemeProvider} from "@mui/material";
 import { lightTheme } from "./assets/themes/theme";
 import { darkTheme } from "./assets/themes/theme";
 import CaseReport from './feature/cases/CaseReport.jsx';
+import MetaCenter from './feature/meta/MetaCenter.jsx';
+
 function App() {
 
 return (
@@ -21,6 +23,7 @@ return (
       <Route path="/" element={<CenterHub />} />
       <Route path="/home" element={<HomePage />} />
       <Route path='/case' element={<CaseReport />} />
+      <Route path="/meta" element={<MetaCenter />} />
     </Routes>
   </Router>
   </ThemeProvider>

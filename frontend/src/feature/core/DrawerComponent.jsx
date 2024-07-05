@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from "react-router-dom";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import BugReportIcon from '@mui/icons-material/BugReport';
+import ScienceIcon from '@mui/icons-material/Science';
 
 
 
@@ -64,6 +65,14 @@ export default function DrawerComponent( {open, toggleDrawer})
                         <BugReportIcon color="primary" />
                     </ListItemIcon>
                     <ListItemText primary={'Case'} secondary={'Send Case'} />
+                </ListItemButton>
+            </ListItem>
+            <ListItem key={'Meta Center'} disablePadding onClick={() => navigate('/meta')}>
+                <ListItemButton>
+                    <ListItemIcon>
+                        <ScienceIcon color="primary" />
+                    </ListItemIcon>
+                    <ListItemText primary={'Meta Data'} secondary={'Explore the meta data of your org'} />
                 </ListItemButton>
             </ListItem>
         </List>
